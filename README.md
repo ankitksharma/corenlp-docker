@@ -7,4 +7,4 @@ the endpoint on port 9000. Requests are made as covered in the documentation.
 
 
 ## Usage
-docker run -p 9000:9000 --name corenlp --rm -i -t anktksh/corenlp-latest
+docker run -p 9000:9000 --name corenlp --rm -i -t anktksh/corenlp
