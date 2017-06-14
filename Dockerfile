@@ -1,14 +1,21 @@
-FROM java:8
+FROM java:jre-alpine
 
-MAINTAINER Casey Hilland <casey dot hilland at gmail dot com>
+MAINTAINER Ankit Sharma <anktksh [at] gmail [dot] com>
 
-RUN wget http://nlp.stanford.edu/software/stanford-corenlp-full-2015-12-09.zip
-RUN unzip stanford-corenlp-full-2015-12-09.zip && rm stanford-corenlp-full-2015-12-09.zip 
+RUN apk add --update --no-cache \
+	 unzip \
+	 wget
 
-WORKDIR stanford-corenlp-full-2015-12-09
+RUN wget http://nlp.stanford.edu/software/stanford-corenlp-full-2017-06-09.zip
+RUN unzip stanford-corenlp-full-2017-06-09.zip && \
+	rm stanford-corenlp-full-2017-06-09.zip
+
+WORKDIR stanford-corenlp-full-2017-06-09
 
 RUN export CLASSPATH="`find . -name '*.jar'`"
 
-EXPOSE 9000
+ENV PORT 9000
 
-CMD java -cp "*" -mx4g edu.stanford.nlp.pipeline.StanfordCoreNLPServer
+EXPOSE $PORT
+
+CMD java -cp "*" -mx4g edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 15000
